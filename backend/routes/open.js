@@ -2,11 +2,10 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const fs = require('fs');
 
-
-router.get('/', (req, res) => {
-    res.send('From Open Route');
-})
+// Read the external json file and save it in an array
+let timetable_data = JSON.parse(fs.readFileSync('./Lab3-timetable-data.json'));
 
 router.post('/register', async (req, res) => {
     let userData = req.body;
@@ -154,7 +153,6 @@ router.route('/courses/:subject/:course/:component?')
 
         // Send the data
         res.send(filtered_data);
-
     })
 
 

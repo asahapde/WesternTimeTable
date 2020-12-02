@@ -6,6 +6,10 @@ const router = express.Router();
 const mongoose = require('mongoose');
 require('dotenv/config');
 
+// Routes
+const openRoute = require('./routes/open');
+const secureRoute = require('./routes/secure');
+const adminRoute = require('./routes/admin');
 
 // Add cors for Angular
 app.use(cors());
@@ -22,10 +26,10 @@ app.use((req,res,next) => {
 // Parse data as json
 app.use(express.json());
 
-// Install the router at /api/courses
-app.use('/api', router);
-
-
+// Install the router at /api
+app.use('/api/open', openRoute);
+app.use('/api/secure', secureRoute);
+app.use('/api/admin', adminRoute);
 
 
 // Connect to DB

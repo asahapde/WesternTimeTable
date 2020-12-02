@@ -1,2 +1,8 @@
 const express = require('express');
-const router = require('Router');
+const router = express.Router();
+
+router.get('/', (req,res) => {
+    res.send('From Admin Route');
+})
+
+module.exports = router;

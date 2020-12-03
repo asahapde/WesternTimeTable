@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const passport = require('passport');
-const bcrypt = require('bcrypt');
 const fs = require('fs');
 
 // Read the external json file and save it in an array

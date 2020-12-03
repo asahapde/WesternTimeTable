@@ -13,6 +13,8 @@ passport.use(
                 if (error) return done(error);
                 else if (!user) return done(null, false, {message: 'Email is not registered.'});
                 else if (!user.checkPassword(password)) return done(null, false, {message : 'Password is wrong.'});
+                else if (!user.verified) return done(null, false, {message: 'Account is not verified.'});
+                else if (!user.activated) return done(null, false, {message: 'Account is deactivated. Contact the administrator at asahapde@uwo.ca.'});
                 else return done(null, user);
             });
     })

@@ -8,7 +8,9 @@ const passport = require('passport');
 require('dotenv/config');
 require('./config/passportConfig');
 
+// Authorize logged in user
 const verifyJwtToken = require('./config/verifyJWT');
+
 // Routes
 const openRoute = require('./routes/open');
 const secureRoute = require('./routes/secure');
@@ -38,7 +40,7 @@ app.use('/api/admin', verifyJwtToken, adminRoute);
 
 
 // Connect to DB
-mongoose.connect( process.env.DB_CONNECTION, { useNewUrlParser: true,  useUnifiedTopology: true}, () => 
+mongoose.connect( process.env.DB_CONNECTION, { useNewUrlParser: true,  useUnifiedTopology: true, useCreateIndex: true}, () => 
     console.log('Connected to DB!')
 );
 

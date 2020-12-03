@@ -137,11 +137,17 @@ router.get('/schedules', (req,res) => {
         if (error) {
             console.log(error);
         } else {
-            if(schedule.length == 0) return res.status(404).json({ message: 'No public Schedules found'});
+            if(schedule.length == 0) return res.status(404).json({ message: 'No public Schedules found' });
             else res.status(200).json({ Schedule });
         }
-    })
+    }).sort({updatedAt:-1})
 })
+
+// Get keyword
+router.get('/courses/keywords', (req,res) => {
+})
+
+
 
 
 module.exports = router;

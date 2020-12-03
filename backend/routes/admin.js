@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req,res) => {
-    res.send('From Admin Route');
+router.get('/getUsers', (req,res) => {
 })
+
+router.put('/editUser', (req,res) => {
+})
+
 
 module.exports = router;

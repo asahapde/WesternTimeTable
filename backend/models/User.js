@@ -5,10 +5,10 @@ const jwt = require('jsonwebtoken');
 const userSchema = new mongoose.Schema({
     name: {type: String, required: true},
     username: {type: String, required: true, maxlength: 15},
-    email: {type: String, required: true},
+    email: {type: String, required: true, unique: true},
     password: {type: String, required: true, minlength: 4},
     admin: {type: Boolean, default: false},
-    activated: {type: Boolean, default: false},
+    activated: {type: Boolean, default: true},
     verified: {type: Boolean, default: false},
 })
 
@@ -28,7 +28,7 @@ userSchema.methods.checkPassword = function (password) {
 };
 
 userSchema.methods.generateJwt = function () {
-    return jwt.sign({ _id: this._id}, "secretcode",{  expiresIn: "5m"} );
+    return jwt.sign({ _id: this._id}, "secretcode", {  expiresIn: "5m"} );
 }
 
 module.exports = mongoose.model('user', userSchema, 'users');

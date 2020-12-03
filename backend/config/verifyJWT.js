@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+require('dotenv/config');
 
 let verifyJwtToken = (req,res,next) => {
     let token;
@@ -6,7 +7,7 @@ let verifyJwtToken = (req,res,next) => {
 
     if(!token) return res.status(403).send({auth: false, message: 'No token.'});
     else {
-        jwt.verify(token, 'secretcode', (error, decoded) => {
+        jwt.verify(token, process.env.SECRET, (error, decoded) => {
             if(error) return res.status(500).send({auth: false, message: 'Token authentication failed.'});
             else {
                 req._id = decoded._id;

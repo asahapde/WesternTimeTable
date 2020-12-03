@@ -30,6 +30,15 @@ router.post('/login', async (req, res) => {
 
 })
 
+router.post('/verify-user/:id', async (req, res) => {
+    User.updateOne({_id: req.params.id}, {$set:{verified:true}}, (error, user) => {
+        if(!user) return res.status(404).json({ message: 'Invalid ID for verification.'});
+        else {
+            res.status(200).json({ message: 'User verification is successful.'});
+        }
+    });
+})
+
 
 // Route for getting all available subject codes
 router.route('/courses')

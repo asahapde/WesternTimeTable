@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv/config');
 
 const userSchema = new mongoose.Schema({
     name: {type: String, required: true},
@@ -28,7 +29,7 @@ userSchema.methods.checkPassword = function (password) {
 };
 
 userSchema.methods.generateJwt = function () {
-    return jwt.sign({ _id: this._id}, "secretcode", {  expiresIn: "5m"} );
+    return jwt.sign({ _id: this._id}, process.env.SECRET, {  expiresIn: "5m"} );
 }
 
 module.exports = mongoose.model('user', userSchema, 'users');

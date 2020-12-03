@@ -8,6 +8,7 @@ const fs = require('fs');
 // Read the external json file and save it in an array
 let timetable_data = JSON.parse(fs.readFileSync('./Lab3-timetable-data.json'));
 
+
 router.post('/register', async (req, res) => {
     let userData = req.body;
     let user = new User(userData)
@@ -21,30 +22,6 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-    let userData = req.body;
-
-    // const user = await User.findOne({ email: userData.email }, (error) => {
-    //     if (error) {
-    //         console.log(error);
-    //     }
-    // })
-
-    // if (!user) {
-    //     res.status(401).send('Invalid Email');
-    // } 
-
-    // try {
-    //     const matchPassword = await bcrypt.compare(userData.password,user.password);
-
-    //     if (!matchPassword) {
-    //         res.status(401).send('Invalid password');
-    //     } else {
-    //         res.status(200).send(user);
-    //     }
-    // } catch (error) {
-    //     console.log(error);
-    // }
-
     passport.authenticate('local', (err, user, info) => {       
         if (err) return res.status(400).json(err);
         else if (user) return res.status(200).json({ "token": user.generateJwt() });

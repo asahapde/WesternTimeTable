@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Schedule = require('../models/Schedule');
 const passport = require('passport');
 const fs = require('fs');
 
@@ -129,6 +130,18 @@ router.route('/courses/:subject/:course/:component?')
         // Send the data
         res.send(filtered_data);
     })
+
+// Get 10 public course list
+router.get('/schedules', (req,res) => {
+    Schedule.find({public: true}, (error, schedule) => {
+        if (error) {
+            console.log(error);
+        } else {
+            if(schedule.length == 0) return res.status(404).json({ message: 'No public Schedules found'});
+            else res.status(200).json({ Schedule });
+        }
+    })
+})
 
 
 module.exports = router;

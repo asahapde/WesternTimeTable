@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const passport = require('passport');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 
@@ -9,14 +10,6 @@ let timetable_data = JSON.parse(fs.readFileSync('./Lab3-timetable-data.json'));
 
 router.post('/register', async (req, res) => {
     let userData = req.body;
-
-    try {
-        const hashedPassword = await bcrypt.hash(this.password, 10);
-        this.password = hashedPassword;
-    } catch (error) {
-        console.log(error);
-    }
-
     let user = new User(userData)
     user.save((error, registeredUser) => {
         if (error) {
@@ -30,27 +23,33 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     let userData = req.body;
 
-    const user = await User.findOne({ email: userData.email }, (error) => {
-        if (error) {
-            console.log(error);
-        }
-    })
+    // const user = await User.findOne({ email: userData.email }, (error) => {
+    //     if (error) {
+    //         console.log(error);
+    //     }
+    // })
 
-    if (!user) {
-        res.status(401).send('Invalid Email');
-    } 
+    // if (!user) {
+    //     res.status(401).send('Invalid Email');
+    // } 
 
-    try {
-        const matchPassword = await bcrypt.compare(userData.password,user.password);
+    // try {
+    //     const matchPassword = await bcrypt.compare(userData.password,user.password);
 
-        if (!matchPassword) {
-            res.status(401).send('Invalid password');
-        } else {
-            res.status(200).send(user);
-        }
-    } catch (error) {
-        console.log(error);
-    }
+    //     if (!matchPassword) {
+    //         res.status(401).send('Invalid password');
+    //     } else {
+    //         res.status(200).send(user);
+    //     }
+    // } catch (error) {
+    //     console.log(error);
+    // }
+
+    passport.authenticate('local', (err, user, info) => {       
+        if (err) return res.status(400).json(err);
+        else if (user) return res.status(200).json({ "token": user.generateJwt() });
+        else return res.status(404).json(info);
+    })(req, res);
 
 })
 

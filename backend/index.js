@@ -4,7 +4,9 @@ const app = express();
 const port = 3000;
 const router = express.Router();
 const mongoose = require('mongoose');
+const passport = require('passport');
 require('dotenv/config');
+require('./config/passportConfig');
 
 // Routes
 const openRoute = require('./routes/open');
@@ -22,6 +24,8 @@ app.use((req,res,next) => {
     console.log(`${req.method} request for ${req.url}`);
     next();
 });
+
+app.use(passport.initialize());
 
 // Parse data as json
 app.use(express.json());

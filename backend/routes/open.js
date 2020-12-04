@@ -51,6 +51,18 @@ router.post('/login', async (req, res) => {
 
 })
 
+router.get('/google',
+  passport.authenticate('google', { scope:
+  	[ 'email', 'profile' ] }
+));
+
+router.get( '/google/callback',
+	passport.authenticate( 'google', {
+		successRedirect: '/success',
+        failureRedirect: '/login',
+       
+}));
+
 router.get('/verify-user/:id', async (req, res) => {
     User.findOne({ _id: req.params.id }, (error, userFound) => {
         if (userFound) {

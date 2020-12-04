@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const Schedule = require('../models/Schedule');
 
 
 router.get('/profile', (req,res) => {
@@ -15,7 +16,6 @@ router.post('/updatePassword', async (req,res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         req.body.password = hashedPassword;
-        next();
     } catch (error) {
         console.log(error);
     }
@@ -26,5 +26,64 @@ router.post('/updatePassword', async (req,res) => {
     });
 })
 
+
+// Route for getting all available schedules, adding new schedules
+router.route('/schedules')
+    .get(async(req,res) => {
+        let userData;
+        
+        await User.findOne({_id: req._id}, (err, user) => {
+            if(err) res.status(404).json(err);
+            if(user) userData = user;
+            else res.status(404).json({ message: 'User not found'});
+        });
+
+        Schedule.find({ username: userData.username }, function (err, schedules) {
+            if(err) res.status(404).json(err);
+            if(schedules.length > 0){
+                res.status(200).send(schedules);
+            } else {
+                res.status(404).json({ message: 'Schedules not found for ' + userData.username});
+            }
+        });
+    })
+    .post(async (req,res) => {
+        const newName = req.body;
+        
+        await User.findOne({_id: req._id}, (err, user) => {
+            if(err) res.status(404).json(err);
+            if(user) {
+                if(newName.name){
+                    if(newName.name.length > 10){
+                        res.status(404).send(`${newName.name} is more than 10 characters`);
+                        return;
+                    }
+        
+                    let schedule = new Schedule({name: newName.name, username: user.username, description: newName.description});
+                    // Insert the name to database
+                    schedule.save((err,schedule) => {
+                        if(err) {
+                            res.status(400).json(err);
+                        }
+                        else res.status(200).send(schedule);
+                    });
+                }
+                else res.status(400).send('Missing name');
+            }
+            else res.status(404).json({ message: 'User not found'});
+        });       
+    })
+    .delete((req,res) => {
+        database.remove({}, {multi: true} ,(err,numRemoved) => {
+            if(numRemoved > 0) res.send(numRemoved + ' schedules removed');
+            else res.send(`No schedules removed`);
+        })
+
+        Schedule.deleteMany({}, (error, deletedSchedules) => {
+            if(error) res.status(400).json(err);
+            res.status(200).json({ message: `${deletedSchedules.length} schedules are removed` });
+        });
+
+    })
 
 module.exports = router;

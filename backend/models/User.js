@@ -30,7 +30,7 @@ userSchema.methods.checkPassword = function (password) {
 };
 
 userSchema.methods.generateJwt = function () {
-    return jwt.sign({ _id: this._id}, process.env.SECRET, {  expiresIn: "5m"} );
+    return jwt.sign({ _id: this._id}, process.env.SECRET, {  expiresIn: "30m"} );
 }
 
 module.exports = mongoose.model('user', userSchema, 'users');

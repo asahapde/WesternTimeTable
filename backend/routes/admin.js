@@ -67,4 +67,13 @@ router.get('/reviews', (req, res) => {
     }).sort({ updatedAt: -1 })
 })
 
+
+router.put('/reviews/:title', (req, res) => {
+    Review.findOneAndUpdate({ title: req.params.title}, { $set: req.body }, (error, review) => {
+        if (error) res.status(404).json(error);
+        if (!policy) return res.status(404).json({ message: 'Review not found' });
+        else res.status(200).json({ review });
+    });
+})
+
 module.exports = router;

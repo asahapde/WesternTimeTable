@@ -8,6 +8,6 @@ const reviewSchema = new Schema({
     hidden: {type: Boolean, default: false}
 })
 
-scheduleSchema.set('timestamps', true);
+reviewSchema.set('timestamps', true);
 
 module.exports = mongoose.model('review', reviewSchema, 'reviews');

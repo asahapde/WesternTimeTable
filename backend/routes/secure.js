@@ -125,4 +125,10 @@ router.route('/schedules/:name')
 
     })
 
+
+router.post('/reviews/:id', async (req, res) => {
+    
+
+});
+
 module.exports = router;

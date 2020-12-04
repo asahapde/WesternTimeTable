@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const router = express.Router();
 const User = require('../models/User');
 const Schedule = require('../models/Schedule');
+const Review = require('../models/Review');
 const passport = require('passport');
 const fs = require('fs');
 require('dotenv/config');
@@ -172,19 +173,30 @@ router.get('/schedules', (req, res) => {
             console.log(error);
         } else {
             if (schedule.length == 0) return res.status(404).json({ message: 'No public Schedules found' });
-            else res.status(200).json({ Schedule });
+            else res.status(200).json( schedule );
         }
     }).sort({ updatedAt: -1 })
 })
 
 // Get keyword
-router.get('/courses/keywords', (req, res) => {
+router.get('/courses/keywords/:id', (req, res) => {
+
 })
 
 // Get reviews
-router.get('/courses/reviews', (req, res) => {
+router.get('/reviews', (req, res) => {
+    Review.find({ hidden: false }, (error, review) => {
+        if (error) {
+            console.log(error);
+        } else {
+            if (review.length == 0) return res.status(404).json({ message: 'No public Reviews found' });
+            else res.status(200).json(review);
+        }
+    }).sort({ updatedAt: -1 })
 })
 
-
+// Get policy
+router.get('/policy', (req, res) => {
+})
 
 module.exports = router;

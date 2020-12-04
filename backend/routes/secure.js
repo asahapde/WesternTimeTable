@@ -50,7 +50,7 @@ router.route('/schedules')
 
     })
     .post(async (req, res) => {
-        const newName = req.body;
+        const newSchedule = req.body;
 
         await User.findOne({ _id: req._id }, (err, user) => {
             if (err) res.status(404).json(err);
@@ -61,7 +61,7 @@ router.route('/schedules')
                         return;
                     }
 
-                    let schedule = new Schedule({ name: newName.name, username: user.username, description: newName.description });
+                    let schedule = new Schedule(newSchedule);
                     // Insert the name to database
                     schedule.save((err, schedule) => {
                         if (err) {

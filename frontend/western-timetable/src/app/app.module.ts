@@ -9,6 +9,10 @@ import { SchedulesComponent } from './schedules/schedules.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PrivateSchedulesComponent } from './private-schedules/private-schedules.component';
+import { PolicyComponent } from './policy/policy.component';
+import { LogComponent } from './log/log.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 
@@ -18,7 +22,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CoursesComponent,
     SchedulesComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PrivateSchedulesComponent,
+    PolicyComponent,
+    LogComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

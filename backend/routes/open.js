@@ -181,6 +181,9 @@ router.get('/schedules', (req, res) => {
 router.get('/courses/keywords', (req, res) => {
 })
 
+// Get reviews
+router.get('/courses/reviews', (req, res) => {
+})
 
 
 

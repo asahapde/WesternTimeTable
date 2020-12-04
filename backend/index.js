@@ -40,7 +40,7 @@ app.use('/api/admin', verifyJwtToken, adminRoute);
 
 
 // Connect to DB
-mongoose.connect( process.env.DB_CONNECTION, { useNewUrlParser: true,  useUnifiedTopology: true, useCreateIndex: true}, () => 
+mongoose.connect( process.env.DB_CONNECTION, { useNewUrlParser: true,  useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false}, () => 
     console.log('Connected to DB!')
 );
 

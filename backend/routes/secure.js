@@ -30,22 +30,22 @@ router.post('/updatePassword', async (req,res) => {
 // Route for getting all available schedules, adding new schedules
 router.route('/schedules')
     .get(async(req,res) => {
-        let userData;
-        
         await User.findOne({_id: req._id}, (err, user) => {
             if(err) res.status(404).json(err);
-            if(user) userData = user;
+            if(user) {
+                Schedule.find({ username: user.username }, function (err, schedules) {
+                    if(err) res.status(404).json(err);
+                    if(schedules.length > 0){
+                        res.status(200).send(schedules);
+                    } else {
+                        res.status(404).json({ message: 'Schedules not found for ' + user.username});
+                    }
+                });
+            }
             else res.status(404).json({ message: 'User not found'});
         });
 
-        Schedule.find({ username: userData.username }, function (err, schedules) {
-            if(err) res.status(404).json(err);
-            if(schedules.length > 0){
-                res.status(200).send(schedules);
-            } else {
-                res.status(404).json({ message: 'Schedules not found for ' + userData.username});
-            }
-        });
+        
     })
     .post(async (req,res) => {
         const newName = req.body;
@@ -83,6 +83,48 @@ router.route('/schedules')
             if(error) res.status(400).json(err);
             res.status(200).json({ message: `${deletedSchedules.length} schedules are removed` });
         });
+
+    })
+
+
+// Route for updating and deleting schedules
+router.route('/schedules/:name')
+    .put(async (req,res) => {
+        const updateName = req.params.name;
+        const updateContent = req.body;
+
+        if(updateName.length > 10){
+            res.status(404).send(`${updateName} is more than 10 characters`);
+            return;
+        }
+
+        
+        await User.findOne({_id: req._id}, (err, user) => {
+            if(err) res.status(404).json(err);
+            if(user) {
+                if(updateContent){
+                    Schedule.findOneAndUpdate({name:updateName, username: user.username}, { $set: updateContent },(err, schedules) => {
+                        if (err) res.status(404).json(err);
+                        if(schedules) res.status(200).send(schedules);
+                        else res.status(404).send(`${updateName} schedule does not exist`);
+                    })
+                }
+                else res.status(404).send(`${updateContent} does not contain course data`);
+            }
+            else res.status(404).json({ message: 'User not found'});
+        });
+
+        
+        
+
+    })
+    .delete(async (req,res) => {
+        const removeName = req.params.name;
+
+        database.remove({name:removeName}, {} ,(err,numRemoved) => {
+            if(numRemoved > 0) res.send(removeName + ' removed');
+            else res.send(`${removeName} schedule does not exist`);
+        })
 
     })
 

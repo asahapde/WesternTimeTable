@@ -5,7 +5,8 @@ const reviewSchema = new Schema({
     title: {type: String, max: 30},
     courseId: {type: String, required:true},
     review: {type: String , max: 255},
-    hidden: {type: Boolean, default: false}
+    hidden: {type: Boolean, default: false},
+    username: {type: String, required: true}
 })
 
 reviewSchema.set('timestamps', true);

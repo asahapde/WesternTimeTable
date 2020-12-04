@@ -201,6 +201,7 @@ router.get('/policy', (req, res) => {
     Policy.find({ hidden: false }, (error, policy) => {
         if (error) {
             console.log(error);
+            res.status(404).json(error);
         } else {
             if (policy.length == 0) return res.status(404).json({ message: 'No public Policies found' });
             else res.status(200).json(policy);

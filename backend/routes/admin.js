@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const Schedule = require('../models/Schedule');
 const Review = require('../models/Review');
 const Policy = require('../models/Policy');
 const Log = require('../models/Log');
@@ -25,7 +24,6 @@ router.put('/editUser/:username', (req, res) => {
 
 router.post('/policy', (req, res) => {
     let policyData = req.body;
-    policyData.username = user.username;
     let policy = new Policy(policyData)
     policy.save((error, savedPolicy) => {
         if (error) {
@@ -36,6 +34,17 @@ router.post('/policy', (req, res) => {
     })
 })
 
+router.post('/logs', (req, res) => {
+    let logData = req.body;
+    let log = new Log(logData)
+    log.save((error, savedLog) => {
+        if (error) {
+            res.status(404).send(error);
+        } else {
+            res.status(200).send(savedLog);
+        }
+    })
+})
 
 router.put('/policy/:id', (req, res) => {
     Policy.findOneAndUpdate({ _id: req.params.id}, { $set: req.body }, (error, policy) => {

@@ -4,6 +4,7 @@ const router = express.Router();
 const User = require('../models/User');
 const Schedule = require('../models/Schedule');
 const Review = require('../models/Review');
+const Policy = require('../models/Policy');
 const passport = require('passport');
 const fs = require('fs');
 require('dotenv/config');
@@ -197,6 +198,14 @@ router.get('/reviews', (req, res) => {
 
 // Get policy
 router.get('/policy', (req, res) => {
+    Policy.find({ hidden: false }, (error, policy) => {
+        if (error) {
+            console.log(error);
+        } else {
+            if (policy.length == 0) return res.status(404).json({ message: 'No public Policies found' });
+            else res.status(200).json(policy);
+        }
+    }).sort({ updatedAt: -1 })
 })
 
 module.exports = router;

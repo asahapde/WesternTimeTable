@@ -180,8 +180,19 @@ router.get('/schedules', (req, res) => {
 })
 
 // Get keyword
-router.get('/courses/keywords/:id', (req, res) => {
+router.get('/keywords/:id', (req, res) => {
+    let searchData = req.params.id;
 
+    searchData = searchData.replace(/\s/g,'');
+
+    // Filter through subcode
+    let filtered_data = timetable_data.filter((data) => {
+        return (String(data.subject).includes(searchData.toUpperCase()) || String(data.catalog_nbr).includes(searchData.toUpperCase()) || (String(data.subject).concat(String(data.catalog_nbr))).includes(searchData.toUpperCase()));
+    })
+
+    if(filtered_data.length > 0) res.status(200).json(filtered_data);
+    else res.status(404).json({message: 'No Results Found'});
+    
 })
 
 // Get reviews
@@ -189,6 +200,7 @@ router.get('/reviews', (req, res) => {
     Review.find({ hidden: false }, (error, review) => {
         if (error) {
             console.log(error);
+            res.status(404).json(error);
         } else {
             if (review.length == 0) return res.status(404).json({ message: 'No public Reviews found' });
             else res.status(200).json(review);

@@ -49,7 +49,7 @@ router.post('/logs', (req, res) => {
 router.put('/policy/:id', (req, res) => {
     Policy.findOneAndUpdate({ _id: req.params.id}, { $set: req.body }, (error, policy) => {
         if (error) res.status(404).json(error);
-        if (!policy) return res.status(404).json({ message: 'User not found' });
+        if (!policy) return res.status(404).json({ message: 'Policy not found' });
         else res.status(200).json({ policy });
     });
 })
@@ -61,7 +61,7 @@ router.get('/reviews', (req, res) => {
             console.log(error);
             res.status(404).json(error);
         } else {
-            if (review.length == 0) return res.status(404).json({ message: 'No public Reviews found' });
+            if (review.length == 0) return res.status(404).json({ message: 'No Reviews found' });
             else res.status(200).json(review);
         }
     }).sort({ updatedAt: -1 })

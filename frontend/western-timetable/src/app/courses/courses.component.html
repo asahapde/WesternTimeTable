@@ -1,1 +1,65 @@
-<p>courses works!</p>
+<div class="m-5">
+    <div>
+        <h2>Search</h2>
+        <div>
+            <label>Subject:
+                <input placeholder="Enter Subject Code" [(ngModel)]="subjectBox" />
+            </label>
+            <label>Course Number:
+                <input placeholder="Enter Course Number" [(ngModel)]="courseBox" />
+            </label>
+            <label>Component:
+                <select [(ngModel)]="selectedOption">
+                    <option selected value="">All</option>
+                    <option value="LEC">Lecture</option>
+                    <option value="TUT">Tutorial</option>
+                    <option value="LAB">Lab</option>
+                </select>
+            </label>
+            <button (click)="submit();">
+                Submit
+            </button>
+            <button (click)="viewAllCourses();">
+                View All Courses
+            </button>
+        </div>
+        <div>
+            <label>Keyword:
+                <input placeholder="Enter keyword" [(ngModel)]="keywordBox" />
+            </label>
+            <button (click)="search();">
+                Search
+            </button>
+        </div>
+    </div>
+
+    <hr>
+
+    <p>{{ results }} Results</p>
+    <div *ngFor='let c of courses'
+        [ngClass]="{'blue' : c.course_info[0].ssr_component == 'TUT', 'red' : c.course_info[0].ssr_component == 'LAB'}" class="m-5" (click)='onSelect(c)'>
+        <h2>{{c.subject}} {{c.catalog_nbr}} - {{c.className}}</h2>
+        <p><strong>Course description: </strong>{{c.catalog_description}}</p>
+        <table [class.selected]='c == selectedCourse'>
+            <tr>
+                <th *ngFor="let column of tableHeader">{{ column }}</th>
+            </tr>
+            <tr>
+                <td>{{ c.course_info[0].class_section }}</td>
+                <td>{{ c.course_info[0].ssr_component }}</td>
+                <td>{{ c.course_info[0].class_nbr }}</td>
+                <td>{{ c.course_info[0].days }}</td>
+                <td>{{ c.course_info[0].start_time }}</td>
+                <td>{{ c.course_info[0].end_time }}</td>
+                <td>{{ c.course_info[0].facility_ID }}</td>
+                <td>{{ c.course_info[0].instructors }}</td>
+                <td>{{ c.course_info[0].descr }}</td>
+                <td>{{ c.course_info[0].enrl_stat }}</td>
+                <td>{{ c.course_info[0].campus }}</td>
+            </tr>
+        </table>
+        <div *ngIf='c == selectedCourse'>
+            <h1>SELCTED</h1>
+        </div>
+    </div>
+</div>

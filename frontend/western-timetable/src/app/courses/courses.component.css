@@ -1,0 +1,36 @@
+* {
+    margin-right: 5px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+}
+
+.blue {
+    color: blue;
+}
+
+.red {
+    color: red;
+}
+
+table.selected {
+    background-color: #CFD8DC;
+    color: white;
+}
+
+table.selected:hover {
+    background-color: #BBD8DC;
+    color: white;
+}
+
+table:hover {
+    color: #607D8B;
+    background-color: #DDD;
+    left: .1em;
+  }

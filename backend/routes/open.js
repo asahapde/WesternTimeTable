@@ -212,7 +212,7 @@ router.get('/keywords/:id', async (req, res) => {
     }
 
     let results = stringSimilarity.findBestMatch(String(searchData).toUpperCase(), keywords);
-    res.status(200).json(timetable_data[results.bestMatchIndex]);
+    res.status(200).json([timetable_data[results.bestMatchIndex]]);
 
 })
 

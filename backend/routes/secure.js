@@ -113,17 +113,14 @@ router.route('/schedules/:name')
             }
             else res.status(404).json({ message: 'User not found'});
         });
-
-        
-        
-
     })
     .delete(async (req,res) => {
         const removeName = req.params.name;
 
-        database.remove({name:removeName}, {} ,(err,numRemoved) => {
-            if(numRemoved > 0) res.send(removeName + ' removed');
-            else res.send(`${removeName} schedule does not exist`);
+        Schedule.findOneAndDelete({name:removeName},(err,numRemoved) => {
+            if(err) res.status(404).json(err);
+            if(numRemoved) res.status(200).send(removeName + ' removed');
+            else res.status(404).send(`${removeName} schedule does not exist`);
         })
 
     })

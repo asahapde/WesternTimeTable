@@ -13,15 +13,16 @@ const userSchema = new mongoose.Schema({
     verified: {type: Boolean, default: false},
 })
 
-userSchema.pre('save', function (next) {
+userSchema.pre('save', async function (next) {
     try {
-        const hashedPassword = bcrypt.hash(this.password, 10);
+        const hashedPassword = await bcrypt.hash(this.password, 10);
         this.password = hashedPassword;
         next();
     } catch (error) {
         console.log(error);
     }
 });
+
 
 
 userSchema.methods.checkPassword = function (password) {

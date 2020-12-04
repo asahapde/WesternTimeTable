@@ -10,6 +10,7 @@ require('dotenv/config');
 // Read the external json file and save it in an array
 let timetable_data = JSON.parse(fs.readFileSync('./Lab3-timetable-data.json'));
 
+// Email Settings
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -17,7 +18,6 @@ let transporter = nodemailer.createTransport({
         pass: process.env.PASSWORD,
     }
 });
-
 
 
 router.post('/register', async (req, res) => {

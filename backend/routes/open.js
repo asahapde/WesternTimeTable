@@ -7,6 +7,7 @@ const Review = require('../models/Review');
 const Policy = require('../models/Policy');
 const passport = require('passport');
 const fs = require('fs');
+const stringSimilarity = require('string-similarity');
 require('dotenv/config');
 
 // Read the external json file and save it in an array
@@ -174,25 +175,33 @@ router.get('/schedules', (req, res) => {
             console.log(error);
         } else {
             if (schedule.length == 0) return res.status(404).json({ message: 'No public Schedules found' });
-            else res.status(200).json( schedule );
+            else res.status(200).json(schedule);
         }
     }).sort({ updatedAt: -1 })
 })
 
 // Get keyword
-router.get('/keywords/:id', (req, res) => {
+router.get('/keywords/:id', async (req, res) => {
     let searchData = req.params.id;
 
-    searchData = searchData.replace(/\s/g,'');
+    searchData = searchData.replace(/\s/g, '');
 
-    // Filter through subcode
-    let filtered_data = timetable_data.filter((data) => {
-        return (String(data.subject).includes(searchData.toUpperCase()) || String(data.catalog_nbr).includes(searchData.toUpperCase()) || (String(data.subject).concat(String(data.catalog_nbr))).includes(searchData.toUpperCase()));
-    })
+    let keywords = [];
 
-    if(filtered_data.length > 0) res.status(200).json(filtered_data);
-    else res.status(404).json({message: 'No Results Found'});
-    
+    try {
+        await timetable_data.filter((data) => {
+            let newString = String(data.catalog_nbr).concat(String(data.className)).replace(/\s/g, '');
+            keywords.push(newString);
+        })
+
+
+    } catch (error) {
+        console.log(error);
+    }
+
+    let results = stringSimilarity.findBestMatch(String(searchData).toUpperCase(), keywords);
+    res.status(200).json(timetable_data[results.bestMatchIndex]);
+
 })
 
 // Get reviews

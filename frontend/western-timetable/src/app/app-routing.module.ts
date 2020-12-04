@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PolicyComponent } from './policy/policy.component';
 import { LogComponent } from './log/log.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'policy', component: PolicyComponent },
   { path: 'log', component: LogComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: '',   redirectTo: 'courses', pathMatch: 'full' }
 ];
 

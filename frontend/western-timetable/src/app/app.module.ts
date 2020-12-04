@@ -13,6 +13,8 @@ import { PrivateSchedulesComponent } from './private-schedules/private-schedules
 import { PolicyComponent } from './policy/policy.component';
 import { LogComponent } from './log/log.component';
 import { AdminComponent } from './admin/admin.component';
+import { FormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -26,14 +28,15 @@ import { AdminComponent } from './admin/admin.component';
     PrivateSchedulesComponent,
     PolicyComponent,
     LogComponent,
-    AdminComponent
+    AdminComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

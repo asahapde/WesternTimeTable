@@ -22,6 +22,7 @@ router.post('/updatePassword', async (req, res) => {
     }
 
     User.updateOne({ _id: req._id }, { $set: { password: req.body.password } }, (error, user) => {
+        if (error) res.status(404).json(error);
         if (!user) return res.status(404).json({ message: 'Password not updated' });
         else res.status(200).json({ message: 'Password updated' });
     });

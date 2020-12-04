@@ -1,5 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/User');
+const Schedule = require('../models/Schedule');
+const Review = require('../models/Review');
+const Policy = require('../models/Policy');
+const Log = require('../models/Log');
 
 router.get('/getUsers', (req,res) => {
     User.find({}, (error, user) => {
@@ -8,11 +13,16 @@ router.get('/getUsers', (req,res) => {
     });
 })
 
-router.put('/editUser', (req,res) => {
+router.put('/editUser/:username', (req,res) => {
+    User.findOneAndUpdate({ username: req.params.username }, { $set: req.body },(error, user) => {
+        if (!user) return res.status(404).json({message: 'User not found' });
+        else res.status(200).json({user });
+    });
 })
 
 
 router.post('/policy/:id', (req, res) => {
+    
 })
 
 

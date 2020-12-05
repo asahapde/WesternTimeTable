@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../course.service';
 import { ReviewService } from '../review.service';
+import { AuthService } from '../auth.service';
 
 import { Course } from '../Course';
 import { Review } from '../Review';
@@ -22,7 +23,7 @@ export class CoursesComponent implements OnInit {
 
   tableHeader = ['Section', 'Component', 'Class Nbr', 'Days', 'Start Time', 'End Time', 'Location', 'Instructor', 'Requisites and Constraints', 'Status', 'Campus'];
 
-  constructor(private courseService: CourseService, private reviewService : ReviewService) {
+  constructor(private courseService: CourseService, private reviewService : ReviewService, private authService: AuthService) {
     this.selectedOption = '';
     this.courseBox = '';
     this.subjectBox = '';
@@ -95,6 +96,10 @@ export class CoursesComponent implements OnInit {
         return r.courseId == (course.subject + " " + course.catalog_nbr)
       })
     });
+  }
+
+  isLoggedIn() {
+    return this.authService.isLoggedIn();
   }
 
 }

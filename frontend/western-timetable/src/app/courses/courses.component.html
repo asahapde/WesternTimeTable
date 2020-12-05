@@ -5,7 +5,7 @@
         <p>Welcome to western timetable. Here you can create personalized timetables and view public timetables along
             with all the course offerings. You may also view and add your reviews for the courses listed. Please log in
             or register to access complete features.</p>
-        <div >
+        <div *ngIf='!isLoggedIn()'>
             <button routerLink="/login" class="btn btn-success">
                 LOG IN
             </button>
@@ -13,12 +13,6 @@
                 REGISTER
             </button>
         </div>
-        <div >
-            <button routerLink="/login" class="btn btn-danger">
-                LOG OUT
-            </button>
-        </div>
-        
     </div>
     <h2 class="text-center">Search</h2>
     <div class="d-flex justify-content-center">

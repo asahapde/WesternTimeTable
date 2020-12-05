@@ -33,7 +33,10 @@ export class AuthService {
   }
 
   getUserProfile() {
-    return this.http.get(this.apiBaseUrl + '/secure/profile');
+    const header = new HttpHeaders({
+      'Authorization' : 'Bearer ' + this.getToken()
+    });
+    return this.http.get('http://localhost:3000/api/secure/profile', {headers: header});
   }
 
 

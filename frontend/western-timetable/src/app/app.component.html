@@ -1,2 +1,39 @@
-
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" routerLink='/'>Western Timetable</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/'>Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/schedules'>Schedules</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/profile'>Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/admin'>Admin</a>
+            </li>
+        </ul>
+        <span class="navbar-text">
+            <div *ngIf='!isLoggedIn()'>
+                <button routerLink="/login" class="btn btn-success mr-2">
+                    LOG IN
+                </button>
+                <button routerLink="/register" class="btn btn-success">
+                    REGISTER
+                </button>
+            </div>
+            <div *ngIf='isLoggedIn()'>
+                <button (click)="onLogout()" class="btn btn-danger">
+                    LOG OUT
+                </button>
+            </div>
+        </span>
+    </div>
+</nav>
 <router-outlet></router-outlet>

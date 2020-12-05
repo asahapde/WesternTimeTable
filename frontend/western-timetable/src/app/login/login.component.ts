@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { NgForm } from "@angular/forms";
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -9,28 +8,27 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { 
+    this.emailBox = '';
+    this.passwordBox = ''
+  }
 
-  model = {
-    email: '',
-    password: ''
-  };
-  emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  serverErrorMessages: string;
+  emailBox: String;
+  passwordBox: String;
   
   ngOnInit() {
     if (this.authService.isLoggedIn())
       this.router.navigateByUrl('/profile');
   }
 
-  onSubmit(form: NgForm) {
-    this.authService.login(form.value).subscribe(
+  onSubmit() {
+    this.authService.login({email: this.emailBox, password: this.passwordBox }).subscribe(
       res => {
         this.authService.setToken(res['token']);
-        this.router.navigateByUrl('/userprofile');
+        this.router.navigateByUrl('/profile');
       },
       err => {
-        this.serverErrorMessages = err.error.message;
+        alert(err.error.message);
       }
     );
   }

@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   login(authCredentials) {
-    return this.http.post(this.apiBaseUrl + '/open/register', authCredentials, this.noAuthHeader);
+    return this.http.post('http://localhost:3000/api/open/login', authCredentials, this.noAuthHeader);
   }
 
   getUserProfile() {

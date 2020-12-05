@@ -1,10 +1,11 @@
-<h2>Public Schedules</h2>
 <div id='view-schedule-div' class="m-5">
-    <div *ngFor="let s of schedules" class="m-5 mainOutline" (click)="onSelect(s)">
+    <h2>Public Schedules</h2>
+    <div *ngFor="let s of schedules | slice:0:10" class="m-5 mainOutline" (click)="onSelect(s)">
         <div [class.selected]='c == selectedCourse'>
             <h4>{{ s.name }} - {{ s.courses?.length || '0' }} Courses</h4>
             <div>
-                <p><strong>Created by:</strong> {{s.username}} <strong>Last Modified:</strong> {{s.updatedAt}}</p>
+                <p><strong>Created by:</strong> {{s.username}} <strong>Last Modified:</strong> {{s.updatedAt}} <strong>Public:</strong> {{s.public}}</p>
+                <p><strong>Description:</strong> {{s.description}}</p>
                 <div *ngIf="s == selectedSchedule">
                     <p class="courses d-inline"><strong>Courses: </strong></p>
                     <div *ngFor="let tableCourse of courses" class="p-5">

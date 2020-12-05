@@ -1,1 +1,25 @@
-<p>register works!</p>
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <form>
+        <h1>Western Timetable Register</h1>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" 
+                placeholder="Enter Name" [(ngModel)]="nameBox" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="username">User Name</label>
+            <input type="text" class="form-control" id="username" 
+                placeholder="Enter User Name" [(ngModel)]="userNameBox" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                placeholder="Enter email" [(ngModel)]="emailBox" name="email" required >
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [(ngModel)]="passwordBox" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary" (click)='onSubmit()'>Submit</button>
+    </form>
+</div>

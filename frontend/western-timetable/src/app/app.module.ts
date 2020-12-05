@@ -15,6 +15,8 @@ import { LogComponent } from './log/log.component';
 import { AdminComponent } from './admin/admin.component';
 import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { NoauthComponent } from './noauth/noauth.component';
 
 
 
@@ -29,7 +31,9 @@ import { ProfileComponent } from './profile/profile.component';
     PolicyComponent,
     LogComponent,
     AdminComponent,
-    ProfileComponent
+    ProfileComponent,
+    NavbarComponent,
+    NoauthComponent
   ],
   imports: [
     BrowserModule,

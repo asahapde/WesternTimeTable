@@ -6,37 +6,26 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
-  selectedUser: User = {
-    name: '',
-    username: '',
-    email: '',
-    password: '',
-    admin: false,
-    activated: false,
-    verified: false,
-  };
-
-  apiBaseUrl: 'http://localhost:3000/api';
-
   noAuthHeader = { headers: new HttpHeaders({ 'NoAuth': 'True' }) };
 
+  adminUser = false;
   constructor(private http: HttpClient) { }
 
   //HttpMethods
 
   postUser(user: User) {
-    return this.http.post(this.apiBaseUrl + '/open/register', user, this.noAuthHeader);
+    return this.http.post('http://localhost:3000/api/open/register', user);
   }
 
   login(authCredentials) {
-    return this.http.post('http://localhost:3000/api/open/login', authCredentials, this.noAuthHeader);
+    return this.http.post('http://localhost:3000/api/open/login', authCredentials);
   }
 
   getUserProfile() {
     const header = new HttpHeaders({
-      'Authorization' : 'Bearer ' + this.getToken()
+      'Authorization': 'Bearer ' + this.getToken()
     });
-    return this.http.get('http://localhost:3000/api/secure/profile', {headers: header});
+    return this.http.get('http://localhost:3000/api/secure/profile', { headers: header });
   }
 
 
@@ -71,4 +60,13 @@ export class AuthService {
     else
       return false;
   }
+
+  setAdmin(isAdmin){
+    this.adminUser = isAdmin;
+  }
+
+  getAdmin() {
+    return this.adminUser;
+  }
+
 }

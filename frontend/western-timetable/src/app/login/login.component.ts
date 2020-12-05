@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
     this.authService.login({email: this.emailBox, password: this.passwordBox }).subscribe(
       res => {
         this.authService.setToken(res['token']);
+        this.authService.setAdmin(res['admin']);
         this.router.navigateByUrl('/profile');
       },
       err => {

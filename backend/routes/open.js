@@ -45,7 +45,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     passport.authenticate('local', (err, user, info) => {
         if (err) return res.status(400).json(err);
-        else if (user) return res.status(200).json({ "token": user.generateJwt() });
+        else if (user) return res.status(200).json({ "token": user.generateJwt() , "admin" : user.admin});
         else return res.status(404).json(info);
     })(req, res);
 

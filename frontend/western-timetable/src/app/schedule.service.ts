@@ -43,6 +43,13 @@ export class ScheduleService {
       )
   }
 
+  getPublicSchedules() : Observable<Schedule[]> {
+    return this.http.get<Schedule[]>('http://localhost:3000/api/open/schedules')
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
   editSchedule(editScheduleName: string, courseData: any[]): Observable<void> {
     const url = `http://localhost:3000/api/schedules/${editScheduleName}`;
 

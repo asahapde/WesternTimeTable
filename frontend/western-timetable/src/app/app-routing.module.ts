@@ -9,17 +9,22 @@ import { RegisterComponent } from './register/register.component';
 import { PolicyComponent } from './policy/policy.component';
 import { LogComponent } from './log/log.component';
 import { ProfileComponent } from './profile/profile.component';
+import { NoauthComponent } from './noauth/noauth.component';
+
+import { AuthGuard } from './auth.guard';
+import { AdminGuard } from './admin.guard';
 
 
 const routes: Routes = [
-  { path: 'courses', component: CoursesComponent },
+  { path: 'courses', component: CoursesComponent},
   { path: 'schedules', component: SchedulesComponent },
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent, canActivate:[AuthGuard, AdminGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'policy', component: PolicyComponent },
-  { path: 'log', component: LogComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'noauth', component: NoauthComponent },
+  { path: 'log', component: LogComponent, canActivate:[AuthGuard, AdminGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate:[AuthGuard] },
   { path: '',   redirectTo: 'courses', pathMatch: 'full' }
 ];
 

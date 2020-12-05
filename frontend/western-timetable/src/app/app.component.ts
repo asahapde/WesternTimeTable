@@ -11,15 +11,4 @@ import { Router } from "@angular/router";
 export class AppComponent {
   title = 'western-timetable';
 
-  constructor(private authService: AuthService, private router: Router) {}
-
-  isLoggedIn() {
-    return this.authService.isLoggedIn();
-  }
-
-  onLogout(){
-    this.authService.deleteToken();
-    this.router.navigate(['/login']);
-  }
-
 }

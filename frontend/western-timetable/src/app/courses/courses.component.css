@@ -20,17 +20,21 @@ table {
 }
 
 table.selected {
-    background-color: #CFD8DC;
+    background-color: lightcoral;
     color: white;
 }
 
 table.selected:hover {
-    background-color: #BBD8DC;
+    background-color: lightcoral;
     color: white;
 }
 
 table:hover {
-    color: #607D8B;
-    background-color: #DDD;
+    color: white;
+    background-color: lightseagreen;
     left: .1em;
-  }
+}
+
+.review {
+    background: lightgreen;
+}

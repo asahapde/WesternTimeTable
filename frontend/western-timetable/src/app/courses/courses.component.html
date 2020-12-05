@@ -1,33 +1,48 @@
 <div class="m-5">
-    <div>
-        <h2>Search</h2>
+    <div class="m-5">
+        <h2 class="text-center">Western Timetable</h2>
+        <h4>About</h4>
+        <p>Welcome to wetsern timetable. Here you can create personalized timetables and view public timetables along
+            with all the course offerings. You may also view and add your reviews for the courses listed. Please log in
+            or register to access complete features.</p>
+        <button routerLink="/login" class="btn btn-success">
+            LOG IN
+        </button>
+        <button routerLink="/register" class="btn btn-success">
+            REGISTER
+        </button>
+    </div>
+
+    <h2 class="text-center">Search</h2>
+    <div class="d-flex justify-content-center">
+
         <div>
             <label>Subject:
-                <input placeholder="Enter Subject Code" [(ngModel)]="subjectBox" />
+                <input placeholder="Enter Subject Code" [(ngModel)]="subjectBox" class="form-control" />
             </label>
             <label>Course Number:
-                <input placeholder="Enter Course Number" [(ngModel)]="courseBox" />
+                <input placeholder="Enter Course Number" [(ngModel)]="courseBox" class="form-control" />
             </label>
             <label>Component:
-                <select [(ngModel)]="selectedOption">
+                <select [(ngModel)]="selectedOption" class="form-control">
                     <option selected value="">All</option>
                     <option value="LEC">Lecture</option>
                     <option value="TUT">Tutorial</option>
                     <option value="LAB">Lab</option>
                 </select>
             </label>
-            <button (click)="submit();">
+            <button (click)="submit();" class="btn btn-primary">
                 Submit
             </button>
-            <button (click)="viewAllCourses();">
+            <button (click)="viewAllCourses();" class="btn btn-primary">
                 View All Courses
             </button>
         </div>
         <div>
             <label>Keyword:
-                <input placeholder="Enter keyword" [(ngModel)]="keywordBox" />
+                <input placeholder="Enter keyword" [(ngModel)]="keywordBox" class="form-control" />
             </label>
-            <button (click)="search();">
+            <button (click)="search();" class="btn btn-primary">
                 Search
             </button>
         </div>
@@ -35,9 +50,10 @@
 
     <hr>
 
-    <p>{{ results }} Results</p>
+    <p>{{ results }} Result(s)</p>
     <div *ngFor='let c of courses'
-        [ngClass]="{'blue' : c.course_info[0].ssr_component == 'TUT', 'red' : c.course_info[0].ssr_component == 'LAB'}" class="m-5" (click)='onSelect(c)'>
+        [ngClass]="{'blue' : c.course_info[0].ssr_component == 'TUT', 'red' : c.course_info[0].ssr_component == 'LAB'}"
+        class="m-5" (click)='onSelect(c)'>
         <h2>{{c.subject}} {{c.catalog_nbr}} - {{c.className}}</h2>
         <p><strong>Course description: </strong>{{c.catalog_description}}</p>
         <table [class.selected]='c == selectedCourse'>
@@ -58,8 +74,12 @@
                 <td>{{ c.course_info[0].campus }}</td>
             </tr>
         </table>
-        <div *ngIf='c == selectedCourse'>
-            <h1>SELCTED</h1>
+        <div *ngIf='c == selectedCourse' class='mt-5 review'>
+            <h3>Reviews for {{c.subject}} {{c.catalog_nbr}}: </h3>
+            <div *ngFor='let r of reviews'>
+                <h4>"{{r.title}}" by {{r.username}} at {{r.updatedAt}}</h4>
+                <p>{{r.review}}</p>
+            </div>
         </div>
     </div>
 </div>

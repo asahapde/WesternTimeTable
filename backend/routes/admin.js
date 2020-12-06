@@ -13,8 +13,8 @@ router.get('/getUsers', (req, res) => {
     });
 })
 
-router.put('/editUser/:username', (req, res) => {
-    User.findOneAndUpdate({ username: req.params.username }, { $set: req.body }, (error, user) => {
+router.put('/editUser/:id', (req, res) => {
+    User.findOneAndUpdate({ _id: req.params.id }, { $set: req.body }, (error, user) => {
         if (error) res.status(404).json(error);
         if (!user) return res.status(404).json({ message: 'User not found' });
         else res.status(200).json({ user });
@@ -72,7 +72,7 @@ router.get('/reviews', (req, res) => {
 router.put('/reviews/:title', (req, res) => {
     Review.findOneAndUpdate({ title: req.params.title}, { $set: req.body }, (error, review) => {
         if (error) res.status(404).json(error);
-        if (!policy) return res.status(404).json({ message: 'Review not found' });
+        if (!review) return res.status(404).json({ message: 'Review not found' });
         else res.status(200).json({ review });
     });
 })

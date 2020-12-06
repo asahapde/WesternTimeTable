@@ -18,7 +18,7 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getAllUsers().subscribe(
       res => {
-        
+
         this.users = res['user'];
       },
       err => {
@@ -37,12 +37,93 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  changeAdmin(){
+  changeAdmin(user) {
+    let info = {admin:false}
+    if (user.admin) {
+      info = {admin:false}
+      this.refresh()
 
+    } else {
+      info = {admin:true}
+      this.refresh()
+    }
+
+    this.authService.toggleUserInfo(user._id, info).subscribe(
+      res => {
+        alert("User admin status changed!");
+      },
+      err => {
+        alert(err);
+
+      }
+    );
+    this.refresh()
   }
 
-  changeActive(){
+  changeActive(user) {
+    let info = {activated:false}
+    if (user.activated) {
+      info = {activated:false}
+      this.refresh()
+    } else {
+      info = {activated:true}
+      this.refresh()
+    }
 
+    this.authService.toggleUserInfo(user._id, info).subscribe(
+      res => {
+        alert("User active status changed!");
+      },
+      err => {
+        alert(err);
+
+      }
+    );
+    this.refresh()
+  }
+
+  changeHide(review) {
+    let info = {hidden:false}
+    if (review.hidden) {
+      info = {hidden:false}
+      this.refresh()
+    } else {
+      info = {hidden:true}
+      this.refresh()
+    }
+
+    this.authService.toggleReviewInfo(review.title, info).subscribe(
+      res => {
+        alert("Review hide status changed!");
+      },
+      err => {
+        alert(err);
+
+      }
+    );
+    this.refresh()
+  }
+
+  refresh() {
+    this.authService.getAllUsers().subscribe(
+      res => {
+
+        this.users = res['user'];
+      },
+      err => {
+        console.log(err);
+
+      }
+    );
+    this.reviewService.getAllReviews().subscribe(
+      res => {
+        this.reviews = res;
+      },
+      err => {
+        console.log(err);
+
+      }
+    );
   }
 
 }

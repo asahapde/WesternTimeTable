@@ -84,4 +84,20 @@ export class AuthService {
     });
     return this.http.get('http://localhost:3000/api/admin/getUsers', { headers: header });
   }
+
+  toggleUserInfo(id, info) {
+    const header = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.getToken()
+    });
+    return this.http.put(`http://localhost:3000/api/admin/editUser/${id}`, info, { headers: header });
+  }
+
+  toggleReviewInfo(title, info) {
+    const header = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.getToken()
+    });
+    return this.http.put(`http://localhost:3000/api/admin/reviews/${title}`, info, { headers: header });
+  }
+
+
 }

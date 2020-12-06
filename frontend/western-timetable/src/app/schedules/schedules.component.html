@@ -10,6 +10,7 @@
                     <p class="courses d-inline"><strong>Courses: </strong></p>
                     <div *ngFor="let tableCourse of courses" class="p-5">
                         <p>{{tableCourse.subject}} {{tableCourse.catalog_nbr}}</p>
+                        <p><strong>Description: </strong>{{tableCourse.catalog_description}}</p>
                         <table>
                             <tr>
                                 <th *ngFor="let column of tableHeader">{{ column }}</th>

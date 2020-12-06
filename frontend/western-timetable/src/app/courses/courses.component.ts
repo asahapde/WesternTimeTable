@@ -23,7 +23,7 @@ export class CoursesComponent implements OnInit {
 
   tableHeader = ['Section', 'Component', 'Class Nbr', 'Days', 'Start Time', 'End Time', 'Location', 'Instructor', 'Requisites and Constraints', 'Status', 'Campus'];
 
-  constructor(private courseService: CourseService, private reviewService : ReviewService, private authService: AuthService) {
+  constructor(private courseService: CourseService, private reviewService: ReviewService, private authService: AuthService) {
     this.selectedOption = '';
     this.courseBox = '';
     this.subjectBox = '';
@@ -74,22 +74,27 @@ export class CoursesComponent implements OnInit {
   }
 
   search(): void {
-    this.courseService.getKeyword(`http://localhost:3000/api/open/keywords/${this.keywordBox}`).subscribe(course => {
-      
-      this.courses = course;
-      this.results = this.courses.length;
-    }, error => {
-      this.courses = [];
-      this.results = this.courses.length;
-    });
+    if (this.keywordBox.length <= 3) {
+      alert("Enter 4 characters into keyword box");
+    } else {
+      this.courseService.getKeyword(`http://localhost:3000/api/open/keywords/${this.keywordBox}`).subscribe(course => {
+
+        this.courses = course;
+        this.results = this.courses.length;
+      }, error => {
+        this.courses = [];
+        this.results = this.courses.length;
+      });
+    }
+
   }
 
-  onSelect(course: Course) : void {
+  onSelect(course: Course): void {
     this.selectedCourse = course
     this.getReview(this.selectedCourse)
   }
 
-  getReview(course: Course) : void {
+  getReview(course: Course): void {
     this.reviewService.getReviews().subscribe(review => {
       this.reviews = review;
       this.reviews = this.reviews.filter((r) => {

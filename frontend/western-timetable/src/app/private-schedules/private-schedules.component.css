@@ -1,0 +1,14 @@
+.mainOutline:hover {
+    color: white;
+    background-color: lightslategray;
+    left: .1em;
+}
+
+table, th, td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+}

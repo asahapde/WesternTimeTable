@@ -1,1 +1,35 @@
-<p>private-schedules works!</p>
+<div *ngFor="let s of schedules | slice:0:10" class="m-5 mainOutline" (click)="onSelect(s)">
+    <div [class.selected]='c == selectedCourse'>
+        <h4>{{ s.name }} - {{ s.courses?.length || '0' }} Courses</h4>
+        <div>
+            <p><strong>Created by:</strong> {{s.username}} <strong>Last Modified:</strong> {{s.updatedAt}} <strong>Public:</strong> {{s.public}}</p>
+            <p><strong>Description:</strong> {{s.description}}</p>
+            <div *ngIf="s == selectedSchedule">
+                <p class="courses d-inline"><strong>Courses: </strong></p>
+                <div *ngFor="let tableCourse of courses" class="p-5">
+                    <p>{{tableCourse.subject}} {{tableCourse.catalog_nbr}}</p>
+                    <p><strong>Description: </strong>{{tableCourse.catalog_description}}</p>
+                    <table>
+                        <tr>
+                            <th *ngFor="let column of tableHeader">{{ column }}</th>
+                        </tr>
+                        <tr>
+                            <td>{{ tableCourse.course_info[0].class_section }}</td>
+                            <td>{{ tableCourse.course_info[0].ssr_component }}</td>
+                            <td>{{ tableCourse.course_info[0].class_nbr }}</td>
+                            <td>{{ tableCourse.course_info[0].days }}</td>
+                            <td>{{ tableCourse.course_info[0].start_time }}</td>
+                            <td>{{ tableCourse.course_info[0].end_time }}</td>
+                            <td>{{ tableCourse.course_info[0].facility_ID }}</td>
+                            <td>{{ tableCourse.course_info[0].instructors }}</td>
+                            <td>{{ tableCourse.course_info[0].descr }}</td>
+                            <td>{{ tableCourse.course_info[0].enrl_stat }}</td>
+                            <td>{{ tableCourse.course_info[0].campus }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

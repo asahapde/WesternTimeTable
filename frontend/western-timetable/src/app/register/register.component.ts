@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
       }
       this.authService.postUser(this.user).subscribe(
         res => {
-          alert("User Registered");
+          alert("User Registered. Check your email for verification details.");
           this.emailBox = '';
           this.passwordBox = '';
           this.userNameBox = '';

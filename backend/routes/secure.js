@@ -55,9 +55,9 @@ router.route('/schedules')
         await User.findOne({ _id: req._id }, (err, user) => {
             if (err) res.status(404).json(err);
             if (user) {
-                if (newName.name) {
-                    if (newName.name.length > 10) {
-                        res.status(404).send(`${newName.name} is more than 10 characters`);
+                if (newSchedule.name) {
+                    if (newSchedule.name.length > 10) {
+                        res.status(404).send(`${newSchedule.name} is more than 10 characters`);
                         return;
                     }
 

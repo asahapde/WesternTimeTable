@@ -42,7 +42,7 @@ export class PrivateSchedulesComponent implements OnInit {
 
   editSelected = false;
 
-  constructor(private scheduleService: ScheduleService, private courseService: CourseService, private authService: AuthService) {
+  constructor(private scheduleService: ScheduleService, private courseService: CourseService, private authService: AuthService,) {
     this.scheduleService.getSchedules().subscribe(
       res => {
         this.schedules = res;
@@ -72,6 +72,15 @@ export class PrivateSchedulesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.scheduleService.getSchedules().subscribe(
+      res => {
+        this.schedules = res;
+      },
+      err => {
+        console.log(err);
+
+      }
+    );
   }
 
   getCourses(schedule: Schedule) {
@@ -238,6 +247,18 @@ export class PrivateSchedulesComponent implements OnInit {
     } else {
       this.editSelected = true;
     }
+  }
+
+  getSchedules() {
+    this.scheduleService.getSchedules().subscribe(
+      res => {
+        this.schedules = res;
+      },
+      err => {
+        console.log(err);
+
+      }
+    );
   }
 
 }

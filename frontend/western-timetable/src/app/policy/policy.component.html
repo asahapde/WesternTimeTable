@@ -22,7 +22,7 @@
         Add
     </button>
 </div>
-<div class="ml-5" *ngFor="let p of policies">
+<div class="m-5" *ngFor="let p of policies">
     <h2 class="d-inline align-middle">Policy - {{p.updatedAt}}</h2>
     <button (click)="editSelect();" class="btn btn-success d-inline ml-3" *ngIf="isAdmin()">
         Edit Policy

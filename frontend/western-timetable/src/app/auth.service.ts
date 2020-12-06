@@ -78,4 +78,10 @@ export class AuthService {
     return false;
   }
 
+  getAllUsers() {
+    const header = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.getToken()
+    });
+    return this.http.get('http://localhost:3000/api/admin/getUsers', { headers: header });
+  }
 }

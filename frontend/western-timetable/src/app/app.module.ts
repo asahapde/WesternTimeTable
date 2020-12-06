@@ -40,7 +40,8 @@ import { NoauthComponent } from './noauth/noauth.component';
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

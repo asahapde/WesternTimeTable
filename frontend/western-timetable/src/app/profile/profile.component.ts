@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit {
     this.userDetails = {}
     this.passwordBox = '';
     this.confirmBox = '';
+    
   }
 
   ngOnInit() {
@@ -64,5 +65,6 @@ export class ProfileComponent implements OnInit {
       this.passwordSelected = true;
     }
   }
+  
 
 }

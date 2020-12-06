@@ -22,11 +22,10 @@ export class ScheduleService {
 
   }
 
-  createSchedule(newName: string): Observable<Schedule> {
-    newName = newName.replace(/<[^>]*>/g, '');
+  createSchedule(newSchedule): Observable<Schedule> {
 
 
-    return this.http.post<Schedule>('http://localhost:3000/api/secure/schedules', { name: newName })
+    return this.http.post<Schedule>('http://localhost:3000/api/secure/schedules', newSchedule, { headers: this.header })
       .pipe(
         catchError(this.handleError)
       )
@@ -35,7 +34,7 @@ export class ScheduleService {
   deleteSchedule(deleteName: string): Observable<void> {
     const url = `http://localhost:3000/api/secure/schedules/${deleteName}`;
 
-    return this.http.delete<void>(url)
+    return this.http.delete<void>(url, { headers: this.header })
       .pipe(
         catchError(this.handleError)
       )
@@ -49,7 +48,7 @@ export class ScheduleService {
   }
 
   getPublicSchedules() : Observable<Schedule[]> {
-    return this.http.get<Schedule[]>('http://localhost:3000/api/open/schedules')
+    return this.http.get<Schedule[]>('http://localhost:3000/api/open/schedules', { headers: this.header })
       .pipe(
         catchError(this.handleError)
       )
@@ -58,7 +57,7 @@ export class ScheduleService {
   editSchedule(editScheduleName: string, courseData: any[]): Observable<void> {
     const url = `http://localhost:3000/api/secure/schedules/${editScheduleName}`;
 
-    return this.http.put<void>(url, courseData)
+    return this.http.put<void>(url, courseData, { headers: this.header })
       .pipe(
         catchError(this.handleError)
       )

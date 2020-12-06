@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ScheduleService } from '../schedule.service';
 import { CourseService } from '../course.service';
+import { AuthService } from '../auth.service';
 import { Schedule } from '../Schedule';
 import { Course } from '../Course';
 
@@ -18,7 +19,25 @@ export class PrivateSchedulesComponent implements OnInit {
   courses: Course[];
   tableHeader = ['Section', 'Component', 'Class Nbr', 'Days', 'Start Time', 'End Time', 'Location', 'Instructor', 'Requisites and Constraints', 'Status', 'Campus'];
 
-  constructor(private scheduleService: ScheduleService, private courseService: CourseService) {
+
+  nameBox;
+  publicBox;
+  descriptionBox;
+  courseBox;
+  subjectBox;
+
+  newSchedule = {
+    name: '',
+    username: '',
+    description: '',
+    public: true,
+  }
+
+  userName;
+
+  addSelected = false;
+
+  constructor(private scheduleService: ScheduleService, private courseService: CourseService, private authService: AuthService) {
     this.scheduleService.getSchedules().subscribe(
       res => {
         this.schedules = res;
@@ -28,6 +47,20 @@ export class PrivateSchedulesComponent implements OnInit {
 
       }
     );
+    this.authService.getUserProfile().subscribe(
+      res => {
+        this.userName = res['user'].username;
+      },
+      err => {
+        console.log(err);
+        return '';
+      }
+    );
+    this.nameBox = '';
+    this.publicBox = 'true';
+    this.descriptionBox = '';
+    this.courseBox = '';
+    this.subjectBox = '';
   }
 
   ngOnInit(): void {
@@ -55,6 +88,70 @@ export class PrivateSchedulesComponent implements OnInit {
       this.selectedSchedule = '';
     }
 
+  }
+
+  edit() {
+
+  }
+
+  delete(scheduleName) {
+    this.scheduleService.deleteSchedule(scheduleName).subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+
+      }
+    );
+    this.refresh();
+  }
+
+  refresh() {
+    this.scheduleService.getSchedules().subscribe(
+      res => {
+        this.schedules = res;
+      },
+      err => {
+        console.log(err);
+
+      }
+    );
+  }
+
+  add() {
+    if (this.nameBox == '' || this.nameBox.length > 10) {
+      alert("Enter a valid name");
+    } else {
+      this.newSchedule.name = this.nameBox.replace(/<[^>]*>/g, '');
+      this.newSchedule.username = this.userName;
+      this.newSchedule.public = (this.publicBox === "true");
+      this.newSchedule.description = this.descriptionBox;
+
+
+      this.scheduleService.createSchedule(this.newSchedule).subscribe(course => {
+        alert("Course Added!");
+        this.nameBox = '';
+        this.publicBox = '';
+        this.descriptionBox = '';
+        this.courseBox = '';
+        this.subjectBox = '';
+        this.refresh();
+      }, err => {
+        alert(err);
+      });
+    }
+
+
+
+  }
+
+  addSelect() {
+    if (this.addSelected) {
+      this.addSelected = false;
+    } else {
+      this.addSelected = true;
+    }
   }
 
 }

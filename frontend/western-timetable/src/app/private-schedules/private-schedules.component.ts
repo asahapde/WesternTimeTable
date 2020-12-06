@@ -25,6 +25,9 @@ export class PrivateSchedulesComponent implements OnInit {
   descriptionBox;
   courseBox;
   subjectBox;
+  nameEditBox;
+  publicEditBox;
+  descriptionEditBox;
 
   newSchedule = {
     name: '',
@@ -36,6 +39,8 @@ export class PrivateSchedulesComponent implements OnInit {
   userName;
 
   addSelected = false;
+
+  editSelected = false;
 
   constructor(private scheduleService: ScheduleService, private courseService: CourseService, private authService: AuthService) {
     this.scheduleService.getSchedules().subscribe(
@@ -61,6 +66,9 @@ export class PrivateSchedulesComponent implements OnInit {
     this.descriptionBox = '';
     this.courseBox = '';
     this.subjectBox = '';
+    this.nameEditBox = '';
+    this.publicEditBox = 'true';
+    this.descriptionEditBox = '';
   }
 
   ngOnInit(): void {
@@ -90,7 +98,77 @@ export class PrivateSchedulesComponent implements OnInit {
 
   }
 
-  edit() {
+  edit(scheduleEdit) {
+    if (this.nameEditBox == '') {
+      alert("Add a name");
+    } else if (this.descriptionEditBox == '' || this.descriptionEditBox.length > 255) {
+      alert("Add valid description");
+    } else if (this.subjectBox == '') {
+      alert("Add a subject");
+    } else if (this.courseBox == '') {
+      alert("Add a course");
+    } else {
+      this.courseService.getSearch(`http://localhost:3000/api/open/courses/${this.subjectBox}/${this.courseBox}`).subscribe(course => {
+        // Get the schedule to be editted
+        let schedule: Schedule = scheduleEdit;
+
+        let courseExits = false;
+        if (schedule.courses != undefined) {
+          schedule.courses.forEach(c => {
+            if (c.subject == this.subjectBox && c.course == this.courseBox) {
+              courseExits = true;
+            }
+          })
+        }
+
+
+        let finalData = [];
+
+        if (courseExits) {
+          // Delete the course if it exits
+          schedule.courses.forEach(c => {
+            if (c.course == this.courseBox && c.subject == this.subjectBox) { }
+            else finalData.push(c);
+          })
+        }
+        else {
+          // Add the course if it doesnt exist
+          if (schedule.courses != undefined) {
+            schedule.courses.forEach(c => {
+              finalData.push(c);
+            })
+
+          }
+          finalData.push({ subject: this.subjectBox, course: this.courseBox });
+        }
+
+        let fullScheduleData = {
+          courses: finalData,
+          name: this.nameEditBox,
+          description: this.descriptionEditBox,
+          public: this.publicEditBox,
+        };
+
+
+        // Course exits
+        this.scheduleService.editSchedule(scheduleEdit.name, fullScheduleData).subscribe(course => {
+          alert("Course Edited!");
+          this.nameEditBox = '';
+          this.publicEditBox = 'true';
+          this.descriptionEditBox = '';
+          this.courseBox = '';
+          this.subjectBox = '';
+          this.refresh();
+        }, error => {
+          alert(error);
+          this.refresh();
+        });
+
+
+      }, error => {
+
+      });
+    }
 
   }
 
@@ -132,7 +210,7 @@ export class PrivateSchedulesComponent implements OnInit {
       this.scheduleService.createSchedule(this.newSchedule).subscribe(course => {
         alert("Course Added!");
         this.nameBox = '';
-        this.publicBox = '';
+        this.publicBox = 'true';
         this.descriptionBox = '';
         this.courseBox = '';
         this.subjectBox = '';
@@ -151,6 +229,14 @@ export class PrivateSchedulesComponent implements OnInit {
       this.addSelected = false;
     } else {
       this.addSelected = true;
+    }
+  }
+
+  editSelect() {
+    if (this.editSelected) {
+      this.editSelected = false;
+    } else {
+      this.editSelected = true;
     }
   }
 

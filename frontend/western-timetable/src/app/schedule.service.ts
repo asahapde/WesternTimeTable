@@ -54,10 +54,10 @@ export class ScheduleService {
       )
   }
 
-  editSchedule(editScheduleName: string, courseData: any[]): Observable<void> {
+  editSchedule(editScheduleName: string, schedule): Observable<void> {
     const url = `http://localhost:3000/api/secure/schedules/${editScheduleName}`;
 
-    return this.http.put<void>(url, courseData, { headers: this.header })
+    return this.http.put<void>(url, schedule, { headers: this.header })
       .pipe(
         catchError(this.handleError)
       )

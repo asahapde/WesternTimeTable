@@ -62,11 +62,14 @@ export class AuthService {
   }
 
   setAdmin(isAdmin){
-    this.adminUser = isAdmin;
+    localStorage.setItem('admin', isAdmin);
   }
 
   getAdmin() {
-    return this.adminUser;
+    if(localStorage.getItem('admin') == 'true'){
+      return true;
+    }
+    return false;
   }
 
 }

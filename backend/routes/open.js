@@ -231,7 +231,7 @@ router.get('/reviews', (req, res) => {
 
 // Get policy
 router.get('/policy', (req, res) => {
-    Policy.find({ hidden: false }, (error, policy) => {
+    Policy.find({}, (error, policy) => {
         if (error) {
             console.log(error);
             res.status(404).json(error);

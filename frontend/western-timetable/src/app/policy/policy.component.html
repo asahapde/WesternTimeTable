@@ -1,1 +1,58 @@
-<p>policy works!</p>
+<button (click)="addSelect();" class="btn btn-success m-5" *ngIf="isAdmin()">
+    Add Policy
+</button>
+<div class="m-5" *ngIf="addSelected">
+    <h3>Adding Policy</h3>
+    <div class="form-group mr-3">
+        <label class="mr-3">Security and Privacy Policy:
+        </label>
+        <input placeholder="Enter Policy" [(ngModel)]="securityBox" class="form-control" name="name" />
+    </div>
+    <div class="form-group mr-3">
+        <label class="mr-3">Acceptable Use Policy:
+        </label>
+        <input placeholder="Enter Policy" [(ngModel)]="aupBox" class="form-control" name="name" />
+    </div>
+    <div class="form-group mr-3">
+        <label class="mr-3">DMCA Notice:
+        </label>
+        <input placeholder="Enter Policy" [(ngModel)]="dmcaBox" class="form-control" name="name" />
+    </div>
+    <button (click)="addPolicy();" class="btn btn-success">
+        Add
+    </button>
+</div>
+<div class="ml-5" *ngFor="let p of policies">
+    <h2 class="d-inline align-middle">Policy - {{p.updatedAt}}</h2>
+    <button (click)="editSelect();" class="btn btn-success d-inline ml-3" *ngIf="isAdmin()">
+        Edit Policy
+    </button>
+    <div class="" *ngIf="editSelected">
+        <h3>Editing Policy</h3>
+        <div class="form-group mr-3">
+            <label class="mr-3">Security and Privacy Policy:
+            </label>
+            <input placeholder="Enter Policy" [(ngModel)]="securityEditBox" class="form-control" name="name" />
+        </div>
+        <div class="form-group mr-3">
+            <label class="mr-3">Acceptable Use Policy:
+            </label>
+            <input placeholder="Enter Policy" [(ngModel)]="aupEditBox" class="form-control" name="name" />
+        </div>
+        <div class="form-group mr-3">
+            <label class="mr-3">DMCA Notice:
+            </label>
+            <input placeholder="Enter Policy" [(ngModel)]="dmcaEditBox" class="form-control" name="name" />
+        </div>
+        <button (click)="editPolicy(p);" class="btn btn-success">
+            Edit
+        </button>
+    </div>
+    <h3>Security and Privacy Policy</h3>
+    <p>{{p.security}}</p>
+    <h3>Acceptable Use Policy</h3>
+    <p>{{p.aup}}</p>
+    <h3>DMCA notice & takedown policy</h3>
+    <p>{{p.dmca}}</p>
+    <hr>
+</div>

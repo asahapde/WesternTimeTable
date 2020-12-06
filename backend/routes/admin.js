@@ -47,6 +47,7 @@ router.post('/logs', (req, res) => {
 })
 
 router.put('/policy/:id', (req, res) => {
+    console.log(req.params.id);
     Policy.findOneAndUpdate({ _id: req.params.id}, { $set: req.body }, (error, policy) => {
         if (error) res.status(404).json(error);
         if (!policy) return res.status(404).json({ message: 'Policy not found' });

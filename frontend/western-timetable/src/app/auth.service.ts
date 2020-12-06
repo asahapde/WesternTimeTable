@@ -28,6 +28,12 @@ export class AuthService {
     return this.http.get('http://localhost:3000/api/secure/profile', { headers: header });
   }
 
+  changePassword(password) {
+    const header = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.getToken()
+    });
+    return this.http.post('http://localhost:3000/api/secure/updatepassword', password, { headers: header });
+  }
 
   //Helper Methods
 

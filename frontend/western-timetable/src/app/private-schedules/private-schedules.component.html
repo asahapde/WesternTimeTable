@@ -28,7 +28,7 @@
 <div *ngFor="let s of schedules | slice:0:10" class="m-5 mainOutline">
     <div [class.selected]='c == selectedCourse'>
         <h4>{{ s.name }} - {{ s.courses?.length || '0' }} Courses
-            <button (click)="editSelect();" class="btn btn-success mr-3 ml-3">
+            <button (click)="editSelect(s);" class="btn btn-success mr-3 ml-3">
                 Edit Schedule
             </button>
             <button (click)="delete(s.name);" class="btn btn-danger">
@@ -39,7 +39,7 @@
             <p><strong>Created by:</strong> {{s.username}} <strong>Last Modified:</strong> {{s.updatedAt}}
                 <strong>Public:</strong> {{s.public}}</p>
             <p><strong>Description:</strong> {{s.description}}</p>
-            <div class="mt-3 mb-3" *ngIf="editSelected">
+            <div class="mt-3 mb-3" *ngIf="editSelected == s.name">
                 <h3>Editing Schedule</h3>
                 <div class="form-group mr-3">
                     <label class="mr-3">Schedule Name:

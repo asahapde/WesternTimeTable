@@ -40,7 +40,7 @@ export class PrivateSchedulesComponent implements OnInit {
 
   addSelected = false;
 
-  editSelected = false;
+  editSelected;
 
   constructor(private scheduleService: ScheduleService, private courseService: CourseService, private authService: AuthService,) {
     this.scheduleService.getSchedules().subscribe(
@@ -241,11 +241,11 @@ export class PrivateSchedulesComponent implements OnInit {
     }
   }
 
-  editSelect() {
-    if (this.editSelected) {
-      this.editSelected = false;
+  editSelect(schedule) {
+    if (this.editSelected == schedule.name) {
+      this.editSelected = '';
     } else {
-      this.editSelected = true;
+      this.editSelected = schedule.name;
     }
   }
 

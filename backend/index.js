@@ -23,7 +23,7 @@ app.use(cors());
 app.use('/', express.static('static'));
 
 // Middleware for logging
-app.use((req,res,next) => {
+app.use((req, res, next) => {
     console.log(`${req.method} request for ${req.url}`);
     next();
 });
@@ -40,7 +40,7 @@ app.use('/api/admin', verifyJwtToken, adminRoute);
 
 
 // Connect to DB
-mongoose.connect( process.env.DB_CONNECTION, { useNewUrlParser: true,  useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false}, () => 
+mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false }, () =>
     console.log('Connected to DB!')
 );
 

@@ -209,7 +209,7 @@ export class PrivateSchedulesComponent implements OnInit {
   add() {
     if (this.nameBox == '' || this.nameBox.length > 10) {
       alert("Enter a valid name");
-    } else if (this.schedules.length == 20){
+    } else if (this.schedules != undefined && this.schedules.length == 20){
       alert("You cannot create more than 20 lists!");
     } else {
       this.newSchedule.name = this.nameBox.replace(/<[^>]*>/g, '');

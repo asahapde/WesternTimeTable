@@ -43,4 +43,17 @@ export class LoginComponent implements OnInit {
 
   }
 
+  onGoogle() {
+
+    window.open('http://localhost:3000/api/open/google', "mywindow", "location=1,status=1,scrollbars=1, width=800,height=800");
+    window.addEventListener('message', (message) => {
+      this.authService.setToken(message.data.token);
+      this.authService.setAdmin(message.data.admin);
+      this.router.navigateByUrl('/profile');
+      
+    });
+
+
+  }
+
 }

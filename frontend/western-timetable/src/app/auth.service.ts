@@ -21,6 +21,10 @@ export class AuthService {
     return this.http.post('http://localhost:3000/api/open/login', authCredentials);
   }
 
+  googleLogin() {
+    return this.http.get('http://localhost:3000/api/open/google/');
+  }
+
   getUserProfile() {
     const header = new HttpHeaders({
       'Authorization': 'Bearer ' + this.getToken()

@@ -37,8 +37,19 @@ passport.use(
         callbackURL: "http://localhost:3000/api/open/google/callback"
     },
         function (accessToken, refreshToken, profile, cb) {
-            User.findOneAndUpdate({ username: profile.displayName }, { $set: { email: profile.emails[0].value, username: profile.displayName, name: profile.displayName, verified: true } }, { upsert: true }, function (err, user) {
-                return cb(err, user);
+            User.findOne({ username: profile.displayName }, function (err, user) {
+                if (user) {
+                    cb(null, user);
+                } else {
+                    new User({
+                        email: profile.emails[0].value,
+                        username: profile.displayName,
+                        name: profile.displayName,
+                        verified: true
+                    }).save().then((newUser) => {
+                        cb(null, newUser);
+                    })
+                }
             });
         }
     )

@@ -45,23 +45,22 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     passport.authenticate('local', (err, user, info) => {
         if (err) return res.status(400).json(err);
-        else if (user) return res.status(200).json({ "token": user.generateJwt() , "admin" : user.admin});
+        else if (user) return res.status(200).json({ "token": user.generateJwt(), "admin": user.admin });
         else return res.status(404).json(info);
     })(req, res);
 
 })
 
 router.get('/google',
-  passport.authenticate('google', { scope:
-  	[ 'email', 'profile' ] }
-));
+    passport.authenticate('google', {
+        scope:
+            ['email', 'profile']
+    }
+    ));
 
-router.get( '/google/callback',
-	passport.authenticate( 'google', {
-		successRedirect: '/success',
-        failureRedirect: '/login',
-       
-}));
+router.get('/google/callback', passport.authenticate('google', { scope: ['email', 'profile']}), (req,res) =>{
+    res.json({ "token": req.user.generateJwt(), "admin": req.user.admin });
+});
 
 router.get('/verify-user/:id', async (req, res) => {
     User.findOne({ _id: req.params.id }, (error, userFound) => {

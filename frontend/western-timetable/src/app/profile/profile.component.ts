@@ -4,7 +4,6 @@ import { Router } from "@angular/router";
 import { ReviewService } from '../review.service'
 import { CourseService } from '../course.service'
 import { Course } from '../Course'
-import { timeStamp } from 'console';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +19,7 @@ export class ProfileComponent implements OnInit {
   confirmBox;
 
   courses;
-  courseIds;
+  courseIdList = [];
 
   titleBox;
   courseIdBox;
@@ -28,6 +27,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router, private reviewService: ReviewService, private courseService: CourseService) {
     this.userDetails = {}
+    this.courseIdList = [];
     this.passwordBox = '';
     this.confirmBox = '';
     this.titleBox = '';
@@ -48,7 +48,10 @@ export class ProfileComponent implements OnInit {
     this.courseService.getCourses().subscribe(course => {
       this.courses = course;
 
-      this.courses.filter();
+      this.courses.filter(course => {
+        this.courseIdList.push(course.subject + " " + course.catalog_nbr);
+      });
+
     });
   }
 
@@ -67,7 +70,7 @@ export class ProfileComponent implements OnInit {
     } else if (this.passwordBox != this.confirmBox) {
       alert("Confirm password mismatch");
     } else {
-      this.authService.changePassword({password: this.passwordBox}).subscribe(course => {
+      this.authService.changePassword({ password: this.passwordBox }).subscribe(course => {
         alert("Password changed!");
         this.passwordBox = '';
         this.confirmBox = '';
@@ -78,17 +81,19 @@ export class ProfileComponent implements OnInit {
   }
 
   addReview() {
-    if(this.titleBox == ''){
+    if (this.titleBox == '') {
       alert("Enter a title");
     } else if (this.courseIdBox == '') {
       alert("Enter a course Id");
     } else if (this.reviewBox == "") {
       alert("Enter a review");
+    } else if (this.courseIdList.indexOf(this.courseIdBox.toUpperCase()) == -1) {
+      alert("Enter a valid course id!");
     } else {
       let data = {
         username: this.userDetails.username,
         title: this.titleBox,
-        courseId: this.courseIdBox,
+        courseId: this.courseIdBox.toUpperCase(),
         review: this.reviewBox
       }
 
@@ -99,7 +104,7 @@ export class ProfileComponent implements OnInit {
         },
         err => {
           alert(err);
-  
+
         }
       );
     }
@@ -112,7 +117,7 @@ export class ProfileComponent implements OnInit {
       this.passwordSelected = true;
     }
   }
-  
+
   reviewSelect() {
     if (this.reviewSelected) {
       this.reviewSelected = false;

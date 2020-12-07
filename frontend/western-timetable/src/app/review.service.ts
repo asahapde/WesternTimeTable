@@ -32,14 +32,14 @@ export class ReviewService {
     )
   }
 
-  createReview(newName: string): Observable<Review> {
-    newName = newName.replace(/<[^>]*>/g, '');
-
-
-    return this.http.post<Review>('http://localhost:3000/api/schedules', { name: newName })
-      .pipe(
-        catchError(this.handleError)
-      )
+  createReview(data): Observable<Review> {
+    const header = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.authService.getToken()
+    });
+    return this.http.post<Review>('http://localhost:3000/api/secure/reviews/', data, { headers: header })
+    .pipe(
+      catchError(this.handleError)
+    )
   }
 
   handleError(error){

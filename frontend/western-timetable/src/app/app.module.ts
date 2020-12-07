@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NoauthComponent } from './noauth/noauth.component';
+import { PrivateReviewsComponent } from './private-reviews/private-reviews.component';
 
 
 
@@ -33,7 +34,8 @@ import { NoauthComponent } from './noauth/noauth.component';
     AdminComponent,
     ProfileComponent,
     NavbarComponent,
-    NoauthComponent
+    NoauthComponent,
+    PrivateReviewsComponent
   ],
   imports: [
     BrowserModule,

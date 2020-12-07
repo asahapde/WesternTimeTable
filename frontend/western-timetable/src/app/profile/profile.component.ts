@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from "@angular/router";
+import { ReviewService } from '../review.service'
+import { CourseService } from '../course.service'
+import { Course } from '../Course'
+import { timeStamp } from 'console';
 
 @Component({
   selector: 'app-profile',
@@ -11,14 +15,24 @@ export class ProfileComponent implements OnInit {
 
   userDetails;
   passwordSelected = false;
+  reviewSelected = false
   passwordBox;
   confirmBox;
 
-  constructor(private authService: AuthService, private router: Router) {
+  courses;
+  courseIds;
+
+  titleBox;
+  courseIdBox;
+  reviewBox;
+
+  constructor(private authService: AuthService, private router: Router, private reviewService: ReviewService, private courseService: CourseService) {
     this.userDetails = {}
     this.passwordBox = '';
     this.confirmBox = '';
-    
+    this.titleBox = '';
+    this.courseIdBox = '';
+    this.reviewBox = '';
   }
 
   ngOnInit() {
@@ -31,6 +45,11 @@ export class ProfileComponent implements OnInit {
 
       }
     );
+    this.courseService.getCourses().subscribe(course => {
+      this.courses = course;
+
+      this.courses.filter();
+    });
   }
 
   isLoggedIn() {
@@ -58,6 +77,34 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  addReview() {
+    if(this.titleBox == ''){
+      alert("Enter a title");
+    } else if (this.courseIdBox == '') {
+      alert("Enter a course Id");
+    } else if (this.reviewBox == "") {
+      alert("Enter a review");
+    } else {
+      let data = {
+        username: this.userDetails.username,
+        title: this.titleBox,
+        courseId: this.courseIdBox,
+        review: this.reviewBox
+      }
+
+
+      this.reviewService.createReview(data).subscribe(
+        res => {
+          alert("Review added!");
+        },
+        err => {
+          alert(err);
+  
+        }
+      );
+    }
+  }
+
   passwordSelect() {
     if (this.passwordSelected) {
       this.passwordSelected = false;
@@ -66,5 +113,12 @@ export class ProfileComponent implements OnInit {
     }
   }
   
+  reviewSelect() {
+    if (this.reviewSelected) {
+      this.reviewSelected = false;
+    } else {
+      this.reviewSelected = true;
+    }
+  }
 
 }

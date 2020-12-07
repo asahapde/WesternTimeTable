@@ -34,11 +34,21 @@ router.post('/policy', (req, res) => {
     })
 })
 
+router.get('/logs', (req, res) => {
+    Log.find({}, (error, log) => {
+        if (error) res.status(404).json(error);
+        if (!log) return res.status(404).json({ message: 'Logs not found' });
+        else res.status(200).json({ log });
+    });
+})
+
+
 router.post('/logs', (req, res) => {
     let logData = req.body;
     let log = new Log(logData)
     log.save((error, savedLog) => {
         if (error) {
+            console.log(error);
             res.status(404).send(error);
         } else {
             res.status(200).send(savedLog);

@@ -1,1 +1,37 @@
-<p>log works!</p>
+<div class="m-5">
+    <h4 class="d-inline">Logs</h4>
+    <button (click)="addSelect()" class="btn btn-success ml-3 mr-3">
+        Add Log
+    </button>
+    <div class="mt-3" *ngIf="addSelected">
+        <h3>Adding Log</h3>
+        <div class="form-group mr-3">
+            <label class="mr-3">Title:
+            </label>
+            <input placeholder="Enter Title" [(ngModel)]="titleBox" class="form-control" name="name" type="text"/>
+        </div>
+        <div class="form-group mr-3">
+            <label class="mr-3">Type:
+            </label>
+            <input placeholder="Enter Type" [(ngModel)]="typeBox" class="form-control" name="name" type="text"/>
+        </div>
+        <div class="form-group mr-3">
+            <label class="mr-3">Date Sent:
+            </label>
+            <input placeholder="Enter date sent" [(ngModel)]="dateSentBox" class="form-control" name="name" type="date"/>
+        </div>
+        <div class="form-group mr-3">
+            <label class="mr-3">Date Recieved:
+            </label>
+            <input placeholder="Enter date recieved" [(ngModel)]="dateRecieveBox" class="form-control" name="name" type="date"/>
+        </div>
+        <button (click)="addLog();" class="btn btn-success">
+            Add
+        </button>
+    </div>
+    <div *ngFor="let l of logsData" class="mt-3">
+        <p class="d-inline"><strong>Title: </strong> [{{l.title}}] <strong>Type: </strong>
+            [{{l.type}}]
+            <strong>Date Sent: </strong> {{l.dateSent}} <strong>Date Recieved: </strong> {{l.dateRecieved}}</p>
+    </div>
+</div>

@@ -18,7 +18,7 @@ export class ReviewService {
     const header = new HttpHeaders({
       'Authorization': 'Bearer ' + this.authService.getToken()
     });
-    return this.http.get<Review[]>('http://localhost:3000/api/admin/reviews/', { headers: header })
+    return this.http.get<Review[]>('/api/admin/reviews/', { headers: header })
     .pipe(
       catchError(this.handleError)
     )
@@ -26,7 +26,7 @@ export class ReviewService {
   }
 
   getReviews():Observable<Review[]> {
-    return this.http.get<Review[]>('http://localhost:3000/api/open/reviews/')
+    return this.http.get<Review[]>('/api/open/reviews/')
     .pipe(
       catchError(this.handleError)
     )
@@ -36,7 +36,7 @@ export class ReviewService {
     const header = new HttpHeaders({
       'Authorization': 'Bearer ' + this.authService.getToken()
     });
-    return this.http.post<Review>('http://localhost:3000/api/secure/reviews/', data, { headers: header })
+    return this.http.post<Review>('/api/secure/reviews/', data, { headers: header })
     .pipe(
       catchError(this.handleError)
     )

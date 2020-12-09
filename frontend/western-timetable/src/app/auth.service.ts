@@ -14,29 +14,29 @@ export class AuthService {
   //HttpMethods
 
   postUser(user: User) {
-    return this.http.post('http://localhost:3000/api/open/register', user);
+    return this.http.post('/api/open/register', user);
   }
 
   login(authCredentials) {
-    return this.http.post('http://localhost:3000/api/open/login', authCredentials);
+    return this.http.post('/api/open/login', authCredentials);
   }
 
   googleLogin() {
-    return this.http.get('http://localhost:3000/api/open/google/');
+    return this.http.get('/api/open/google/');
   }
 
   getUserProfile() {
     const header = new HttpHeaders({
       'Authorization': 'Bearer ' + this.getToken()
     });
-    return this.http.get('http://localhost:3000/api/secure/profile', { headers: header });
+    return this.http.get('/api/secure/profile', { headers: header });
   }
 
   changePassword(password) {
     const header = new HttpHeaders({
       'Authorization': 'Bearer ' + this.getToken()
     });
-    return this.http.post('http://localhost:3000/api/secure/updatepassword', password, { headers: header });
+    return this.http.post('/api/secure/updatepassword', password, { headers: header });
   }
 
   //Helper Methods
@@ -86,21 +86,21 @@ export class AuthService {
     const header = new HttpHeaders({
       'Authorization': 'Bearer ' + this.getToken()
     });
-    return this.http.get('http://localhost:3000/api/admin/getUsers', { headers: header });
+    return this.http.get('/api/admin/getUsers', { headers: header });
   }
 
   toggleUserInfo(id, info) {
     const header = new HttpHeaders({
       'Authorization': 'Bearer ' + this.getToken()
     });
-    return this.http.put(`http://localhost:3000/api/admin/editUser/${id}`, info, { headers: header });
+    return this.http.put(`/api/admin/editUser/${id}`, info, { headers: header });
   }
 
   toggleReviewInfo(title, info) {
     const header = new HttpHeaders({
       'Authorization': 'Bearer ' + this.getToken()
     });
-    return this.http.put(`http://localhost:3000/api/admin/reviews/${title}`, info, { headers: header });
+    return this.http.put(`/api/admin/reviews/${title}`, info, { headers: header });
   }
 
 

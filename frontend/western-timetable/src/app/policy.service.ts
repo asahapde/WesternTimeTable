@@ -24,21 +24,21 @@ export class PolicyService {
   }
 
   getPolicy(): Observable<Policy[]> {
-    return this.http.get<Policy[]>('http://localhost:3000/api/open/policy', { headers: this.header })
+    return this.http.get<Policy[]>('/api/open/policy', { headers: this.header })
       .pipe(
         catchError(this.handleError)
       )
   }
 
   createPolicy(newPolicy): Observable<Policy> {
-    return this.http.post<Policy>('http://localhost:3000/api/admin/policy', newPolicy, { headers: this.header })
+    return this.http.post<Policy>('/api/admin/policy', newPolicy, { headers: this.header })
       .pipe(
         catchError(this.handleError)
       )
   }
 
   editPolicy(policy): Observable<void> {
-    const url = `http://localhost:3000/api/admin/policy/${policy._id}`;
+    const url = `/api/admin/policy/${policy._id}`;
 
     return this.http.put<void>(url, policy, { headers: this.header })
       .pipe(

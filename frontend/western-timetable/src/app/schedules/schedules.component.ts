@@ -36,7 +36,7 @@ export class SchedulesComponent implements OnInit {
 
   getCourses(schedule: Schedule) {
     for (let i = 0; i < schedule.courses.length; i++) {
-      this.courseService.getSearch(`http://localhost:3000/api/open/courses/${schedule.courses[i].subject}/${schedule.courses[i].course}`).subscribe(course => {
+      this.courseService.getSearch(`/api/open/courses/${schedule.courses[i].subject}/${schedule.courses[i].course}`).subscribe(course => {
         for (let c of course) {
           this.courses.push(c);
         }

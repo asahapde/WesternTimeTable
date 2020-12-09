@@ -9,7 +9,7 @@ import {catchError} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CourseService {
-  courseURL: string = 'http://localhost:3000/api/open/courses/';
+  courseURL: string = '/api/open/courses/';
 
   constructor(private http : HttpClient) { }
 

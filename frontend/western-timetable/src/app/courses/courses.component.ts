@@ -35,7 +35,7 @@ export class CoursesComponent implements OnInit {
 
   submit(): void {
     if (this.courseBox == '' && this.subjectBox != '' && this.selectedOption == '') {
-      this.courseService.getSearch(`http://localhost:3000/api/open/courses/${this.subjectBox}`).subscribe(course => {
+      this.courseService.getSearch(`/api/open/courses/${this.subjectBox}`).subscribe(course => {
         this.courses = course;
         this.results = this.courses.length;
       }, error => {
@@ -44,7 +44,7 @@ export class CoursesComponent implements OnInit {
       });
     }
     else if (this.courseBox != '' && this.subjectBox != '' && this.selectedOption != '') {
-      this.courseService.getSearch(`http://localhost:3000/api/open/courses/${this.subjectBox}/${this.courseBox}/${this.selectedOption}`).subscribe(course => {
+      this.courseService.getSearch(`/api/open/courses/${this.subjectBox}/${this.courseBox}/${this.selectedOption}`).subscribe(course => {
         this.courses = course;
         this.results = this.courses.length;
       }, error => {
@@ -53,7 +53,7 @@ export class CoursesComponent implements OnInit {
       });
     }
     else if (this.courseBox != '' && this.subjectBox != '' && this.selectedOption == '') {
-      this.courseService.getSearch(`http://localhost:3000/api/open/courses/${this.subjectBox}/${this.courseBox}`).subscribe(course => {
+      this.courseService.getSearch(`/api/open/courses/${this.subjectBox}/${this.courseBox}`).subscribe(course => {
         this.courses = course;
         this.results = this.courses.length;
       }, error => {
@@ -77,7 +77,7 @@ export class CoursesComponent implements OnInit {
     if (this.keywordBox.length <= 3) {
       alert("Enter 4 characters into keyword box");
     } else {
-      this.courseService.getKeyword(`http://localhost:3000/api/open/keywords/${this.keywordBox}`).subscribe(course => {
+      this.courseService.getKeyword(`/api/open/keywords/${this.keywordBox}`).subscribe(course => {
 
         this.courses = course;
         this.results = this.courses.length;

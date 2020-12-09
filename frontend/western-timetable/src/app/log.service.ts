@@ -23,7 +23,7 @@ export class LogService {
     const header = new HttpHeaders({
       'Authorization': 'Bearer ' + this.authService.getToken()
     });
-    return this.http.get<Log[]>('http://localhost:3000/api/admin/logs', { headers: header })
+    return this.http.get<Log[]>('/api/admin/logs', { headers: header })
     .pipe(
       catchError(this.handleError)
     )
@@ -35,7 +35,7 @@ export class LogService {
       'Authorization': 'Bearer ' + this.authService.getToken()
     });
 
-    return this.http.post<Log>('http://localhost:3000/api/admin/logs', logInfo, { headers: header })
+    return this.http.post<Log>('/api/admin/logs', logInfo, { headers: header })
       .pipe(
         catchError(this.handleError)
       )

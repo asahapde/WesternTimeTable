@@ -85,7 +85,7 @@ export class PrivateSchedulesComponent implements OnInit {
 
   getCourses(schedule: Schedule) {
     for (let i = 0; i < schedule.courses.length; i++) {
-      this.courseService.getSearch(`http://localhost:3000/api/open/courses/${schedule.courses[i].subject}/${schedule.courses[i].course}`).subscribe(course => {
+      this.courseService.getSearch(`/api/open/courses/${schedule.courses[i].subject}/${schedule.courses[i].course}`).subscribe(course => {
         for (let c of course) {
           this.courses.push(c);
         }
@@ -117,7 +117,7 @@ export class PrivateSchedulesComponent implements OnInit {
     } else if (this.courseBox == '') {
       alert("Add a course");
     } else {
-      this.courseService.getSearch(`http://localhost:3000/api/open/courses/${this.subjectBox}/${this.courseBox}`).subscribe(course => {
+      this.courseService.getSearch(`/api/open/courses/${this.subjectBox}/${this.courseBox}`).subscribe(course => {
         // Get the schedule to be editted
         let schedule: Schedule = scheduleEdit;
 

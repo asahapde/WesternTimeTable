@@ -1310,24 +1310,24 @@ class ScheduleService {
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(errorResponse);
     }
     createSchedule(newSchedule) {
-        return this.http.post('http://localhost:3000/api/secure/schedules', newSchedule, { headers: this.header })
+        return this.http.post('/api/secure/schedules', newSchedule, { headers: this.header })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
     }
     deleteSchedule(deleteName) {
-        const url = `http://localhost:3000/api/secure/schedules/${deleteName}`;
+        const url = `/api/secure/schedules/${deleteName}`;
         return this.http.delete(url, { headers: this.header })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
     }
     getSchedules() {
-        return this.http.get('http://localhost:3000/api/secure/schedules', { headers: this.header })
+        return this.http.get('/api/secure/schedules', { headers: this.header })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
     }
     getPublicSchedules() {
-        return this.http.get('http://localhost:3000/api/open/schedules', { headers: this.header })
+        return this.http.get('/api/open/schedules', { headers: this.header })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
     }
     editSchedule(editScheduleName, schedule) {
-        const url = `http://localhost:3000/api/secure/schedules/${editScheduleName}`;
+        const url = `/api/secure/schedules/${editScheduleName}`;
         return this.http.put(url, schedule, { headers: this.header })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
     }

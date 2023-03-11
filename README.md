@@ -1,2 +1,3 @@
-# se3316-asahapde-lab5
-Se3316 Lab 5
+# Western Time Table
+
+A full stack web application created with Angular, Typescript, Node.js and MongoDB.
